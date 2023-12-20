@@ -11,17 +11,22 @@ namespace BoilerSystem
     /// </summary>
     internal class UserMenu
     {
-        public List<Boiler> boilers;
-        public UserMenu()
-        {
-            boilers = new List<Boiler>();
-        }
+        /// <summary>
+        /// File path.
+        /// </summary>
+        public string FilePath { get; set; }
 
+        /// <summary>
+        /// Initialize Application.
+        /// </summary>
+        /// <param name="boilerOperation">boilerOperation.</param>
         public void ApplicationInitialization(BoilerOperation boilerOperation)
         {
-            Console.WriteLine($"{boilerOperation.boiler.Status}\n{boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+            FilePath = GetFilePath();
             ExportToFile(boilerOperation.GetAllBoilers());
+            Console.WriteLine($"{boilerOperation.boiler.Status}\n{boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
         }
+
         /// <summary>
         /// Start boiler.
         /// </summary>
@@ -31,21 +36,37 @@ namespace BoilerSystem
             {
                 boilerOperation.PrePurgeCycle();
                 ExportToFile(boilerOperation.GetAllBoilers());
-                Console.WriteLine($"{boilerOperation.boiler.Status}\n{boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
                 boilerOperation.IgnitionPhase();
                 ExportToFile(boilerOperation.GetAllBoilers());
-                Console.WriteLine($"{boilerOperation.boiler.Status}\n{boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
                 boilerOperation.OperationalCycle();
                 ExportToFile(boilerOperation.GetAllBoilers());
-                Console.WriteLine($"{boilerOperation.boiler.Status} \n {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
             }
             else
             {
-                ErrorMessage("Please close the interlock switch");
+                ErrorMessage("Please close the interlock switch.");
                 return;
             }
         }
 
+        /// <summary>
+        /// Stops boiler sequence.
+        /// </summary>
+        /// <param name="boilerOperation">boilerOperation.</param>
+        public void StopBoilerSequence(BoilerOperation boilerOperation)
+        {
+            if (Boiler.Switch == true)
+            {
+                boilerOperation.StopBoiler();
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+            }
+            else
+            {
+                ErrorMessage("Boiler Sequence is not yet started.");
+            }
+        }
         /// <summary>
         /// Get file Path
         /// </summary>
@@ -53,13 +74,13 @@ namespace BoilerSystem
         {
             while (true)
             {
-                Console.WriteLine("Enter Filename for status log");
+                Console.Write("Enter Filename for status log : ");
                 string filePath = Console.ReadLine();
                 if (!String.IsNullOrWhiteSpace(filePath))
                 {
                     return filePath;
                 }
-                ErrorMessage("File path must not be empty");
+                ErrorMessage("File path must not be empty.");
             }
         }
 
@@ -71,7 +92,7 @@ namespace BoilerSystem
             try
             {
                 LoggingSystem loggingSystem = new LoggingSystem();
-                loggingSystem.ExportToFile(GetFilePath(), boilers);
+                loggingSystem.ExportToFile(FilePath, boilers);
             }
             catch (Exception e)
             {
@@ -91,11 +112,11 @@ namespace BoilerSystem
                 if (File.Exists(filePath))
                 {
                     string logMessage = loggingSystem.ImportFromFile(filePath);
-                    Console.WriteLine(logMessage);
+                    Console.WriteLine($"\n{logMessage}");
                 }
                 else
                 {
-                    Console.WriteLine("File doesn't exist.Please enter valid file name.");
+                    ErrorMessage("File doesn't exist.Please enter valid file name.");
                 }
             }
             catch (Exception e)
@@ -109,22 +130,23 @@ namespace BoilerSystem
         /// </summary>
         public void ToggleSwitch(BoilerOperation boilerOperation)
         {
-            Console.WriteLine($"Interlocked switch togged is {Boiler.Switch}");
+            Console.WriteLine($"\nInterlocked switch togged is {Boiler.Switch}");
             while (true)
             {
-                Console.WriteLine("Please click 'T' to toggle the switch");
-                if(Console.ReadLine() == "T")
+                Console.Write("Please click 'T' to toggle the switch : ");
+                if (Console.ReadLine() == "T")
                 {
                     boilerOperation.ToggleSwitch();
-                    Console.WriteLine($"Interlocked switch togged is {Boiler.Switch}");
+                    Console.WriteLine($"\nInterlocked switch togged is {Boiler.Switch}.");
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Please enter T to toggle");
+                    ErrorMessage("Please enter T to toggle.");
                 }
             }
         }
+
         /// <summary>
         /// Represents error message.
         /// </summary>
@@ -132,7 +154,7 @@ namespace BoilerSystem
         public void ErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
+            Console.WriteLine($"\n{message}\n");
             Console.ForegroundColor = ConsoleColor.White;
         }
     }

@@ -22,13 +22,13 @@
         /// </summary>
         public static void Main()
         {
-            Console.WriteLine("Welcome to Boiler controller");
+            Console.WriteLine("Welcome to Boiler controller!");
             BoilerOperation boilerOperation = new BoilerOperation();
             UserMenu userMenu = new UserMenu();
             userMenu.ApplicationInitialization(boilerOperation);
             while (true)
             {
-                Console.WriteLine("1.Toogle Switch\n2.Start boiler\n3.End boiler\n4.View log\n0.Exit");
+                Console.WriteLine("\n1.Toogle Switch\n2.Start boiler\n3.End boiler\n4.View log\n0.Exit");
                 Console.WriteLine("Enter the choice");
                 if (!int.TryParse(Console.ReadLine(), out int validChoice))
                 {
@@ -44,16 +44,16 @@
                         userMenu.StartBoilerSequence(boilerOperation);
                         break;
                     case UserChoice.EndBoilerSequence:
-                        Console.WriteLine("BoilerSequence Ended");
+                        userMenu.StopBoilerSequence(boilerOperation);
                         break;
                     case UserChoice.ViewApplication:
                         userMenu.ViewLog();
                         break;
                     case UserChoice.Exit:
-                        Console.WriteLine("Thankyou for using boiler controller!");
+                        Console.WriteLine("\nThankyou for using boiler controller!");
                         return;
                     default:
-                        Console.WriteLine("Please enter any of the given options");
+                        Console.WriteLine("\nPlease enter any of the given options");
                         break;
                 }
             }

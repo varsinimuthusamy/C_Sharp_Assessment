@@ -65,6 +65,17 @@ namespace BoilerSystem
         }
 
         /// <summary>
+        /// Stop Boiler sequence.
+        /// </summary>
+        public void StopBoiler()
+        {
+            boiler.Timestamp = DateTime.Now;
+            boiler.Status = "Lockout";
+            boiler.Message = "Boiler sequence stopped";
+            boilers.Add(boiler);
+        }
+
+        /// <summary>
         /// Toggle switch.
         /// </summary>
         public void ToggleSwitch()
