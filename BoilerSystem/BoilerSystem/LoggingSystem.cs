@@ -17,11 +17,19 @@ namespace BoilerSystem
         /// Import to file.
         /// </summary>
         /// <param name="FilePath">FilePath.</param>
-        public void ImportFromFile(string FilePath)
+        public string ImportFromFile(string FilePath)
         {
-            using (StreamReader reader = new StreamReader(FilePath))
+            try
             {
-                var logMessage = reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(FilePath))
+                {
+                    var logMessage = reader.ReadToEnd();
+                    return logMessage;
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
 
@@ -30,14 +38,21 @@ namespace BoilerSystem
         /// </summary>
         /// <param name="FilePath">FilePath.</param>
         /// <param name="logMessage">List of log message.</param>
-        public void ExportToFile(string FilePath, List<Boiler>logMessage) 
-        { 
-            using (StreamWriter writer = new StreamWriter(FilePath,true))
+        public void ExportToFile(string FilePath, List<Boiler> logMessage)
+        {
+            try
             {
-                using (CsvWriter csvwriter = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                using (StreamWriter writer = new StreamWriter(FilePath, true))
                 {
-                    csvwriter.WriteRecords(logMessage);
+                    using (CsvWriter csvwriter = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        csvwriter.WriteRecords(logMessage);
+                    }
                 }
+            }
+            catch
+            {
+                throw;
             }
         }
     }

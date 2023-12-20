@@ -11,11 +11,11 @@ namespace BoilerSystem
     /// </summary>
     internal class BoilerOperation
     {
-
+        private readonly List<Boiler> boilers;
         /// <summary>
         /// Represents boiler.
         /// </summary>
-        private readonly Boiler _boiler;
+        public readonly Boiler boiler;
 
         /// <summary>
         /// Initializes the instance of BoilerOperation.
@@ -23,6 +23,7 @@ namespace BoilerSystem
         public BoilerOperation()
         {
             new Boiler("Lockout", DateTime.Now, "Boiler iniatialized");
+            new List<Boiler>();
         }
 
         /// <summary>
@@ -39,37 +40,37 @@ namespace BoilerSystem
         /// <summary>
         /// Represents PrePurgeCycle.
         /// </summary>
-        public Boiler PrePurgeCycle()
+        public void PrePurgeCycle()
         {
-            _boiler.Timestamp = DateTime.Now;
+            boiler.Timestamp = DateTime.Now;
             Thread.Sleep(1000);
-            _boiler.Status = "Pre-Purge";
-            _boiler.Message = "Pre-purge completed";
-            return _boiler;
+            boiler.Status = "Pre-Purge";
+            boiler.Message = "Pre-purge completed";
+            boilers.Add(boiler);
         }
 
         /// <summary>
         /// Represents Ignition Cycle.
         /// </summary>
-        public Boiler IgnitionPhase()
+        public void IgnitionPhase()
         {
-            _boiler.Timestamp = DateTime.Now;
+            boiler.Timestamp = DateTime.Now;
             Thread.Sleep(1000);
-            _boiler.Status = "Ignition";
-            _boiler.Message = "Ignition completed";
-             return _boiler;
+            boiler.Status = "Ignition";
+            boiler.Message = "Ignition completed";
+             boilers.Add(boiler);
         }
 
         /// <summary>
         /// Represents Operational cycle.
         /// </summary>
-        public Boiler OperationalCycle()
+        public void OperationalCycle()
         { 
-            _boiler.Timestamp = DateTime.Now;
+            boiler.Timestamp = DateTime.Now;
             Thread.Sleep(1000);
-            _boiler.Status = "Operational";
-            _boiler.Message = "Boiler now operational";
-            return _boiler;
+            boiler.Status = "Operational";
+            boiler.Message = "Boiler now operational";
+            boilers.Add(boiler);
         }
 
         /// <summary>
@@ -78,6 +79,16 @@ namespace BoilerSystem
         public void ToggleSwitch()
         {
             Boiler.Switch = !Boiler.Switch;
+        }
+
+        /// <summary>
+        /// Deep cop Boilers.
+        /// </summary>
+        /// <returns>Returns list of boilers.</returns>
+        public List<Boiler> GetAllBoilers()
+        {
+            var copiedBoilers = boilers.ConvertAll<Boiler>(boiler => new Boiler(boiler));
+            return copiedBoilers;
         }
     }
 }

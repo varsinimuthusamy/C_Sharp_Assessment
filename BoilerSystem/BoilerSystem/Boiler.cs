@@ -31,11 +31,28 @@ namespace BoilerSystem
         /// </summary>
         public string Message { get; set; }
 
+        /// <summary>
+        /// Instializes an intance of Boiler.
+        /// </summary>
+        /// <param name="status">Status.</param>
+        /// <param name="timestamp">TimeStamp.</param>
+        /// <param name="message">Message.</param>
         public Boiler (string status, DateTime timestamp, string message) 
         { 
             Timestamp = timestamp;
             Message = message;
             Status = status;
+        }
+
+        /// <summary>
+        /// Deep copy of boiler.
+        /// </summary>
+        /// <param name="boiler"></param>
+        public Boiler(Boiler boiler)
+        {
+            Timestamp = boiler.Timestamp;
+            Message = boiler.Message;
+            Status = boiler.Status;
         }
     }
 }
