@@ -6,18 +6,6 @@
     internal class Program
     {
         /// <summary>
-        /// UserChoice.
-        /// </summary>
-        public enum UserChoice
-        {
-            ToggleSwitch = 1,
-            StartBoilerSequence = 2,
-            EndBoilerSequence = 3,
-            ViewApplication = 4,
-            Exit = 0,
-        }
-
-        /// <summary>
         /// This is driver method.
         /// </summary>
         public static void Main()

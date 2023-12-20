@@ -25,8 +25,10 @@ namespace BoilerSystemTest
         public void OperationalCycle_Addboiler_AddedtoBoilers()
         {
             BoilerOperation boilerOperation = new BoilerOperation();
+
             boilerOperation.OperationalCycle();
             var ActualOutput = boilerOperation.GetAllBoilers();
+
             Assert.Equal(1, ActualOutput.Count);
         }
     }

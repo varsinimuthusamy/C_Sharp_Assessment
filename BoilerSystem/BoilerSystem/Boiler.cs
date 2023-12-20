@@ -14,7 +14,7 @@ namespace BoilerSystem
         /// <summary>
         /// Switch.
         /// </summary>
-        public static bool Switch {  get; set; } = false;
+        public static bool Switch { get; set; } = false;
 
         /// <summary>
         /// Boiler Status.
@@ -37,8 +37,8 @@ namespace BoilerSystem
         /// <param name="status">Status.</param>
         /// <param name="timestamp">TimeStamp.</param>
         /// <param name="message">Message.</param>
-        public Boiler (string status, DateTime timestamp, string message) 
-        { 
+        public Boiler(string status, DateTime timestamp, string message)
+        {
             Timestamp = timestamp;
             Message = message;
             Status = status;

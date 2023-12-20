@@ -26,8 +26,6 @@ namespace BoilerSystem
             boilers = new List<Boiler>();
         }
 
-        
-
         /// <summary>
         /// Represents PrePurgeCycle.
         /// </summary>
@@ -49,14 +47,14 @@ namespace BoilerSystem
             Thread.Sleep(1000);
             boiler.Status = "Ignition";
             boiler.Message = "Ignition completed";
-             boilers.Add(boiler);
+            boilers.Add(boiler);
         }
 
         /// <summary>
         /// Represents Operational cycle.
         /// </summary>
         public void OperationalCycle()
-        { 
+        {
             boiler.Timestamp = DateTime.Now;
             Thread.Sleep(1000);
             boiler.Status = "Operational";

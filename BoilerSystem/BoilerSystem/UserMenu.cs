@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace BoilerSystem
 {
@@ -11,10 +13,14 @@ namespace BoilerSystem
     /// </summary>
     internal class UserMenu
     {
+        private static int _count = 1;
+
+        private System.Timers.Timer aTimer = new System.Timers.Timer();
+
         /// <summary>
         /// File path.
         /// </summary>
-        public string FilePath { get; set; }
+        private string _filePath { get; set; }
 
         /// <summary>
         /// Initialize Application.
@@ -22,9 +28,22 @@ namespace BoilerSystem
         /// <param name="boilerOperation">boilerOperation.</param>
         public void ApplicationInitialization(BoilerOperation boilerOperation)
         {
-            FilePath = GetFilePath();
+            _filePath = GetFilePath();
             ExportToFile(boilerOperation.GetAllBoilers());
             Console.WriteLine($"{boilerOperation.boiler.Status}\n{boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+        }
+
+        /// <summary>
+        /// Set timer.
+        /// </summary>
+        public void SetTimer()
+        {
+            aTimer.Interval = 1000;
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.Enabled = true;
+            aTimer.AutoReset = true;
+            while (_count <= 10) ;
+            aTimer.Enabled = false;
         }
 
         /// <summary>
@@ -35,19 +54,38 @@ namespace BoilerSystem
             if (Boiler.Switch == true)
             {
                 boilerOperation.PrePurgeCycle();
+                SetTimer();
                 ExportToFile(boilerOperation.GetAllBoilers());
-                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}\n");
                 boilerOperation.IgnitionPhase();
+                _count = 0;
+                SetTimer();
                 ExportToFile(boilerOperation.GetAllBoilers());
-                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}\n");
                 boilerOperation.OperationalCycle();
+                _count = 0;
+                SetTimer();
                 ExportToFile(boilerOperation.GetAllBoilers());
-                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}");
+                Console.WriteLine($"\nStatus : {boilerOperation.boiler.Status}\nMessage : {boilerOperation.boiler.Message}\nElapsed Time : {DateTime.Now - boilerOperation.boiler.Timestamp}\n");
             }
             else
             {
                 ErrorMessage("Please close the interlock switch.");
                 return;
+            }
+        }
+
+        /// <summary>
+        /// Elapsed time.
+        /// </summary>
+        /// <param name="source">source.</param>
+        /// <param name="e">Event arguments.</param>
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            if (_count <= 10)
+            {
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.WriteLine(_count++);
             }
         }
 
@@ -67,6 +105,7 @@ namespace BoilerSystem
                 ErrorMessage("Boiler Sequence is not yet started.");
             }
         }
+
         /// <summary>
         /// Get file Path
         /// </summary>
@@ -92,7 +131,7 @@ namespace BoilerSystem
             try
             {
                 LoggingSystem loggingSystem = new LoggingSystem();
-                loggingSystem.ExportToFile(FilePath, boilers);
+                loggingSystem.ExportToFile(_filePath, boilers);
             }
             catch (Exception e)
             {
