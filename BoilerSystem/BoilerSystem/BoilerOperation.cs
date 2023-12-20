@@ -9,7 +9,7 @@ namespace BoilerSystem
     /// <summary>
     /// Performs boiler operation.
     /// </summary>
-    internal class BoilerOperation
+    public class BoilerOperation
     {
         private readonly List<Boiler> boilers;
         /// <summary>
@@ -22,20 +22,11 @@ namespace BoilerSystem
         /// </summary>
         public BoilerOperation()
         {
-            new Boiler("Lockout", DateTime.Now, "Boiler iniatialized");
-            new List<Boiler>();
+            boiler = new Boiler("Lockout", DateTime.Now, "Boiler iniatialized");
+            boilers = new List<Boiler>();
         }
 
-        /// <summary>
-        /// Represents boiler initialization.
-        /// </summary>
-        /// <param name="status">Boiler status.</param>
-        /// <param name="timestamp">Timestamp.</param>
-        /// <param name="message">Message.</param>
-        public void BoilerInitialization()
-        {
-            Boiler boiler = new Boiler("Lockout", DateTime.Now, "Boiler iniatialized");
-        }
+        
 
         /// <summary>
         /// Represents PrePurgeCycle.

@@ -11,7 +11,7 @@ namespace BoilerSystem
     /// <summary>
     /// Represents logging system.
     /// </summary>
-    internal class LoggingSystem
+    public class LoggingSystem
     {
         /// <summary>
         /// Import to file.

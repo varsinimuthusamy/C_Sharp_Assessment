@@ -9,7 +9,7 @@ namespace BoilerSystem
     /// <summary>
     /// Represents boiler.
     /// </summary>
-    internal class Boiler
+    public class Boiler
     {
         /// <summary>
         /// Switch.
