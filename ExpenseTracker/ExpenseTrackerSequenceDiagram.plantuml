@@ -1,0 +1,66 @@
+@startuml Expense Tracker
+title Expense Tracker Sequence Diagram
+actor User 
+participant UserInterface as UI 
+participant MiddleWare as MW 
+database System 
+
+group Step : Add Income 
+autonumber
+User -> UI : Enter income details
+UI -> MW : Income details validation
+group loop until valid entries
+MW -> UI : validation failed 
+UI -> User : Re-enter valid details
+User -> UI : Enter valid details
+UI -> MW : Validate and store details in Temperory storage
+end
+end
+group Step : Add Expense 
+autonumber
+User -> UI : Enter expense details
+UI -> MW : Expense details validation
+group loop until valid entries
+MW -> UI : validation failed 
+UI -> User : Re-enter valid details
+User -> UI : Enter valid details
+UI -> MW : Validate and store details in Temperory storage
+end
+end
+
+group Step : Delete Income 
+autonumber
+User -> UI : Enter Income Id to delete
+UI -> MW : Search income id and remove
+MW -> UI : Send success message
+end
+
+group Step : Delete Expense 
+autonumber
+User -> UI : Enter Expense Id to delete
+UI -> MW : Search Expense id and remove
+MW -> UI : Send success message
+end
+
+group Step : Print Records 
+autonumber
+UI -> User : Print Expense and income details
+end
+
+group Step : GetFinancial Summary
+autonumber
+MW -> UI : Get Financial Summary
+end
+
+group Step : Export
+autonumber
+MW -> System : Export income details to database
+MW -> UI : Send Success message or failure message
+end
+
+group Step : Import
+autonumber
+System -> MW : Import income details from database
+MW -> UI : Send Success message or failure message
+end
+@enduml

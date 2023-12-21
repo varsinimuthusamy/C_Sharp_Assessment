@@ -1,0 +1,19 @@
+@startuml Expense Tracker
+title Expense Tracker Usecase
+left to right Direction
+Actor User
+database System
+
+User --> (Add Income) 
+User --> (Add Expense)
+User --> (Delete Income)
+User --> (Delete Expense)
+User --> (Print Income)
+User --> (Print Expense)
+User --> (GetFinancial Summary)
+User --> (Import)
+User --> (Export)
+(Export) --> (System)
+(Import) --> (System)
+
+@enduml
