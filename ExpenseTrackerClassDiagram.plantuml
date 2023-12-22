@@ -1,0 +1,81 @@
+@startuml Expense Tracker
+title Expense Tracker Class Diagram
+Enum UserChoice 
+{
+ AddIncome 
+ AddExpense
+ DeleteIncome
+ DeleteExpense
+ PrintRecords
+ GetFinancialSummary
+ ImportReport
+ ExportReport
+ Exit
+}
+
+Class Expense
+{
+-id 
++Id
++Amount
++Date
++Category
+}
+ 
+Class Income
+{
+-id 
++Id
++Amount
++Date
++Source
+}
+
+class ExpenseRecordOperation
+{
++List<ExpenseRecord> ExpenseRecords
++void AddExpense(ExpenseRecord expense)
++bool DeleteExpense(int id)
++IsExpensePresent(int id)
+}
+
+class IncomeRecordOperation
+{
++List<IncomeRecord> IncomeRecords
++AddIncome(IncomeRecord income)
++DeleteIncome(int id)
++IsIncomePresent(int id)
+}
+
+class JsonFileSerializer
+{
++void SerializeIncome(List<IncomeRecord> incomes, string filePath)
++List<IncomeRecord> DeserializeIncome(string filePath)
++void SerializeExpense(List<ExpenseRecord> expenses, string filePath)
++List<ExpenseRecord> DeserializeExpense(string filePath)
+}
+
+class UserEntries
+{
++void AddIncome(IncomeRecordOperation incomeOperation)
++void AddExpense(ExpenseRecordOperation expenseOperation)
++void DeleteIncome(IncomeRecordOperation incomeOperation)
++void DeleteExpense(ExpenseRecordOperation expenseOperation)
++void PrintAllExpenses(ExpenseRecordOperation expenseOperation)
++void PrintAllIncomes(IncomeRecordOperation incomeOperation)
++void GenerateFinancialReport(ExpenseRecordOperation expenseOperation, IncomeRecordOperation incomeOperation)
++void Export(ExpenseRecordOperation expenseOperation, IncomeRecordOperation incomeOperation)
++void Import(ExpenseRecordOperation expenseOperation, IncomeRecordOperation incomeOperation)
++void ErrorMessage(string message)
++void SuccessMessage(string message)
+}
+
+UserEntries o-- UserChoice
+ExpenseRecordOperation o-- Expense
+IncomeRecordOperation o-- Income
+Program o-- ExpenseRecordOperation
+Program o-- IncomeRecordOperation
+Program o-- UserEntries
+UserEntries o-- JsonSerializer
+
+@enduml
