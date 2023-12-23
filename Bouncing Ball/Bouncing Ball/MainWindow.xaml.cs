@@ -21,6 +21,10 @@ namespace Bouncing_Ball
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _left = true;
+        private bool _right = true;
+        private bool _bottom = true;
+        private bool _top = true;
         private double newPosX;
         private double newPosY;
         private Ellipse ellipse;
@@ -49,6 +53,22 @@ namespace Bouncing_Ball
             PaintCanvas.Children.Remove(ellipse);
             PaintCanvas.Children.Add(ellipse);
             var result = Canvas.GetLeft(PaintCanvas);
+            if(Canvas.GetLeft(PaintCanvas) <= Canvas.GetLeft(ellipse))
+            {
+                _left = true;
+            }
+            if (Canvas.GetTop(PaintCanvas) <= Canvas.GetTop(ellipse))
+            {
+                _top = true;
+            }
+            if (Canvas.GetRight(PaintCanvas) >= Canvas.GetRight(ellipse))
+            {
+                _right = true;
+            }
+            if (Canvas.GetBottom(PaintCanvas) >= Canvas.GetBottom(ellipse))
+            {
+                _bottom = true;
+            }
             if (Canvas.GetLeft(PaintCanvas) >= Canvas.GetLeft(ellipse) || Canvas.GetTop(PaintCanvas) == Canvas.GetTop(ellipse))
             {
                 Canvas.SetLeft(ellipse, newPosX += 4);
@@ -61,6 +81,16 @@ namespace Bouncing_Ball
             }
         } 
 
+        private void MoveLeftTop()
+        {
+            Canvas.SetLeft(ellipse, newPosX += 4);
+            Canvas.SetTop(ellipse, newPosY += 4);
+        }
+
+        private void MoveLeftDown()
+        {
+
+        }
         
     }
 }
