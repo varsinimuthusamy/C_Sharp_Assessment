@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAcquisitionSystem
+﻿namespace DataAcquisitionSystem
 {
     /// <summary>
     /// Represents compliance module.
     /// </summary>
-    internal class ComplianceModule
+    public class ComplianceModule
     {
         /// <summary>
         /// Represents list of AcquisitionData.
@@ -48,15 +42,15 @@ namespace DataAcquisitionSystem
         /// Checks valid limits.
         /// </summary>
         /// <param name="acquisitionDatasfromJSON">acquisitionDatasfromJSON</param>
-        public void CheckValidLimits(object sender , DataAcquisitionEventArgs e )
+        public void CheckValidLimits(object sender, DataAcquisitionEventArgs e)
         {
             List<AcquisitionData> acquisitionDatasfromJSON = e.AcquisitionDatas;
             LoggingSystem loggingSystem = new LoggingSystem();
             foreach (var acquisitionData in acquisitionDatasfromJSON)
             {
-                foreach(var acquisitionDatafromUser in _acquisitionDatas)
+                foreach (var acquisitionDatafromUser in _acquisitionDatas)
                 {
-                    if(acquisitionDatafromUser.Parameter == acquisitionData.Parameter)
+                    if (acquisitionDatafromUser.Parameter == acquisitionData.Parameter)
                     {
                         if (acquisitionDatafromUser.HighLimit > acquisitionData.HighLimit && acquisitionDatafromUser.LowLimit < acquisitionData.LowLimit)
                         {
@@ -69,8 +63,15 @@ namespace DataAcquisitionSystem
                     }
                 }
             }
-            
-            
+        }
+
+        /// <summary>
+        /// Returns deep copy of list.
+        /// </summary>
+        /// <returns> Returns deep copy of list.</returns>
+        public List<AcquisitionData> GetAcquisitionDatas()
+        {
+            return _acquisitionDatas.ConvertAll<AcquisitionData>(data => new AcquisitionData(data));
         }
     }
 }

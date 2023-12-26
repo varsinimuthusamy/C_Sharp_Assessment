@@ -1,23 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAcquisitionSystem
+﻿namespace DataAcquisitionSystem
 {
     /// <summary>
     /// Represents Acquisition Data.
     /// </summary>
-    internal class AcquisitionData : EventArgs
+    public class AcquisitionData : EventArgs
     {
         /// <summary>
         /// Initialises an instance of <see cref="AcquisitionData"/> class.
         /// </summary>
-        public AcquisitionData() 
-        { 
+        public AcquisitionData()
+        {
             HighLimit = 0;
             LowLimit = 0;
+        }
+
+        /// <summary>
+        /// Initialises an instance of <see cref="AcquisitionData"/> class.
+        /// </summary>
+        /// <param name="data">Data.</param>
+        public AcquisitionData(AcquisitionData data)
+        {
+            Parameter = data.Parameter;
+            HighLimit = data.HighLimit;
+            LowLimit = data.LowLimit;
         }
 
         /// <summary>

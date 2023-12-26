@@ -9,7 +9,7 @@ namespace DataAcquisitionSystem
     /// <summary>
     /// Represnts Data Acquisition EventArgs.
     /// </summary>
-    internal class DataAcquisitionEventArgs : EventArgs
+    public class DataAcquisitionEventArgs : EventArgs
     {
         /// <summary>
         /// Initializes an instance of <see cref="DataAcquisitionEventArgs"/> class.

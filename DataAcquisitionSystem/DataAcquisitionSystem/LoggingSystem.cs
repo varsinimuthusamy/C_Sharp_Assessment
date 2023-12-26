@@ -10,7 +10,7 @@ namespace DataAcquisitionSystem
     /// <summary>
     /// Represents logging system.
     /// </summary>
-    internal class LoggingSystem
+    public class LoggingSystem
     {
         /// <summary>
         /// Serialize data.

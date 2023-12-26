@@ -11,7 +11,7 @@ namespace DataAcquisitionSystem
     /// <summary>
     /// Represnts Data Acquisition Module.
     /// </summary>
-    internal class DataAcquisitionModule
+    public class DataAcquisitionModule
     {
         public List<AcquisitionData> acquisitionDatas;
 
@@ -35,10 +35,14 @@ namespace DataAcquisitionSystem
         {
             try
             {
-                using (StreamReader reader = new StreamReader("AcquisitionData.txt"))
+                using (StreamReader reader = new StreamReader("DataAcquisition.txt"))
                 {
                     var data = reader.ReadToEnd();
-                    acquisitionDatas = JsonSerializer.Deserialize<List<AcquisitionData>>(data);
+                    var result = JsonSerializer.Deserialize<JSONFormat>(data);
+                    foreach (var item in result.Parameters)
+                    {
+                        acquisitionDatas.Add(item);
+                    }
                 }
             }
             catch
@@ -46,19 +50,6 @@ namespace DataAcquisitionSystem
                 throw;
             }
 
-        }
-
-        /// <summary>
-        /// Serialize data.
-        /// </summary>
-        /// <param name="acquisitionData"></param>
-        public void SaveJSON(List<AcquisitionData> acquisitionData)
-        {
-            using (StreamWriter writer = new StreamWriter("AcquisitionData.txt"))
-            {
-                var result = JsonSerializer.Serialize(acquisitionData);
-                writer.WriteLine(result);
-            }
         }
 
         /// <summary>

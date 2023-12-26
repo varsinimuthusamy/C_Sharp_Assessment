@@ -3,12 +3,12 @@
     /// <summary>
     /// This is driver class.
     /// </summary>
-    internal class Program
+    public class Program
     {
         /// <summary>
         /// This is driver method.
         /// </summary>
-        static void Main()
+        public static void Main()
         {
             DataAcquisitionModule dataAcquisitionModule = new DataAcquisitionModule();
             ComplianceModule complianceModule = new ComplianceModule();
@@ -21,6 +21,7 @@
                     "3.ConfigureComplianceModule\n" +
                     "4. RefreshConfiguration\n" +
                     "5.Exit\n");
+                Utility.DisplayConfigurationDetails(complianceModule);
                 int validInput = Utility.IsvalidInput();
                 switch ((UserMenu)validInput)
                 {
@@ -34,7 +35,7 @@
                         utility.ConfigureComplianceModule(complianceModule);
                         break;
                     case UserMenu.RefreshConfiguration:
-                        utility.Refresh(dataAcquisitionModule);
+                        utility.Refresh(dataAcquisitionModule, complianceModule);
                         break;
                     case UserMenu.Exit:
                         Utility.MessageColor("Thankyou for using our application");
