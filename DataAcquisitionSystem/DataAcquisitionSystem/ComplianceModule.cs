@@ -24,6 +24,16 @@
         }
 
         /// <summary>
+        /// Represents parameters.
+        /// </summary>
+        public Parameters Parameter { get; set; }
+
+        /// <summary>
+        /// Represents parameter value.
+        /// </summary>
+        public int ParameterValue { get; set; }
+
+        /// <summary>
         /// Sets limits for parameter.
         /// </summary>
         /// <param name="parameter">Paramter.</param>
@@ -48,18 +58,15 @@
             LoggingSystem loggingSystem = new LoggingSystem();
             foreach (var acquisitionData in acquisitionDatasfromJSON)
             {
-                foreach (var acquisitionDatafromUser in _acquisitionDatas)
+                if (Parameter == acquisitionData.Parameter)
                 {
-                    if (acquisitionDatafromUser.Parameter == acquisitionData.Parameter)
+                    if (ParameterValue <= acquisitionData.HighLimit && ParameterValue >= acquisitionData.LowLimit)
                     {
-                        if (acquisitionDatafromUser.HighLimit > acquisitionData.HighLimit && acquisitionDatafromUser.LowLimit < acquisitionData.LowLimit)
-                        {
-                            loggingSystem.SaveToFile($"parameter : {acquisitionData.Parameter} HighLimit : {acquisitionData.HighLimit} LowLimit : {acquisitionData.LowLimit}");
-                        }
-                        else
-                        {
-                            loggingSystem.SaveToFile($"parameter : {acquisitionData.Parameter} exceeds limts");
-                        }
+                        loggingSystem.SaveToFile($"parameter : {acquisitionData.Parameter} HighLimit : {acquisitionData.HighLimit} LowLimit : {acquisitionData.LowLimit}");
+                    }
+                    else
+                    {
+                        loggingSystem.SaveToFile($"parameter : {acquisitionData.Parameter} exceeds limts");
                     }
                 }
             }

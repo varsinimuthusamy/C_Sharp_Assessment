@@ -7,8 +7,21 @@ namespace DataAcquisitionSystem
     /// </summary>
     public class DataAcquisitionModule
     {
+        /// <summary>
+        /// Represents format.
+        /// </summary>
+        public JSONFormat Format { get; set; }
+
+        /// <summary>
+        /// Represents list of acquisitionDatas.
+        /// </summary>
         public List<AcquisitionData> acquisitionDatas;
 
+        /// <summary>
+        /// Represents delegate.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">EventArgs.</param>
         public delegate void DataAcquisitionEventHandler(object sender, DataAcquisitionEventArgs e);
 
         // Declare the event.
@@ -32,8 +45,8 @@ namespace DataAcquisitionSystem
                 using (StreamReader reader = new StreamReader("DataAcquisition.json"))
                 {
                     var data = reader.ReadToEnd();
-                    var result = JsonConvert.DeserializeObject<JSONFormat>(data);
-                    foreach (var item in result.Parameters)
+                    Format = JsonConvert.DeserializeObject<JSONFormat>(data);
+                    foreach (var item in Format.Parameters)
                     {
                         acquisitionDatas.Add(item);
                     }
@@ -43,7 +56,28 @@ namespace DataAcquisitionSystem
             {
                 throw;
             }
+        }
 
+        /// <summary>
+        /// Save JSON.
+        /// </summary>
+        public void SaveJSON(AcquisitionData acquisitionData)
+        {
+            using (StreamWriter writer = new StreamWriter("DataAcquisition.json"))
+            {
+                foreach (var item in acquisitionDatas)
+                {
+                    if (item.Parameter == acquisitionData.Parameter)
+                    {
+                        item.Parameter = acquisitionData.Parameter;
+                        item.HighLimit = acquisitionData.HighLimit;
+                        item.LowLimit = acquisitionData.LowLimit;
+                    }
+                }
+                Format.Parameters = acquisitionDatas;
+                var result = JsonConvert.SerializeObject(Format);
+                writer.Write(result);
+            }
         }
 
         /// <summary>

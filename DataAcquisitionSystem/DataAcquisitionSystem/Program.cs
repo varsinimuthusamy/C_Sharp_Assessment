@@ -32,7 +32,7 @@
                         utility.EndAcquisition(dataAcquisitionModule, complianceModule);
                         break;
                     case UserMenu.ConfigureComplianceModule:
-                        utility.ConfigureComplianceModule(complianceModule);
+                        utility.ConfigureComplianceModule(dataAcquisitionModule);
                         break;
                     case UserMenu.RefreshConfiguration:
                         utility.Refresh(dataAcquisitionModule, complianceModule);

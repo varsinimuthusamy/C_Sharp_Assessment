@@ -14,7 +14,12 @@ namespace DataAcquisitionSystem
         /// <param name="acquisitionData">.acquisitionData.</param>
         public void SaveToFile(string message)
         {
-            using (StreamWriter writer = new StreamWriter("LogFile.txt", true))
+            string fileName = "LogFile.txt";
+
+            while (Utility.FileIsLocked(fileName, FileAccess.Write))
+            {
+            }
+            using (StreamWriter writer = new StreamWriter(fileName, true))
             {
                 writer.WriteLine(message);
             }
