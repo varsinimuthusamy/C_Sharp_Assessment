@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace DataAcquisitionSystem
 {
@@ -23,11 +17,11 @@ namespace DataAcquisitionSystem
         /// <summary>
         /// Initializes an intance of <see cref="DataAcquisitionModule"/> class.
         /// </summary>
-        public DataAcquisitionModule() 
+        public DataAcquisitionModule()
         {
-           acquisitionDatas = new List<AcquisitionData>();
+            acquisitionDatas = new List<AcquisitionData>();
         }
-        
+
         /// <summary>
         /// Deserialize data.
         /// </summary>
@@ -35,10 +29,10 @@ namespace DataAcquisitionSystem
         {
             try
             {
-                using (StreamReader reader = new StreamReader("DataAcquisition.txt"))
+                using (StreamReader reader = new StreamReader("DataAcquisition.json"))
                 {
                     var data = reader.ReadToEnd();
-                    var result = JsonSerializer.Deserialize<JSONFormat>(data);
+                    var result = JsonConvert.DeserializeObject<JSONFormat>(data);
                     foreach (var item in result.Parameters)
                     {
                         acquisitionDatas.Add(item);
@@ -57,7 +51,7 @@ namespace DataAcquisitionSystem
         /// </summary>
         public void OnRefresh()
         {
-            RefreshEvent.Invoke(this, new DataAcquisitionEventArgs() { AcquisitionDatas = acquisitionDatas});
+            RefreshEvent.Invoke(this, new DataAcquisitionEventArgs() { AcquisitionDatas = acquisitionDatas });
         }
     }
 }

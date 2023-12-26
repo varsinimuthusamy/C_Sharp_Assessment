@@ -1,14 +1,14 @@
 ﻿namespace DataAcquisitionSystem
 {
-    /// <summary>
-    /// Represents JSON format.
-    /// </summary>
-    public class JSONFormat
+    public class ParametersList
     {
         /// <summary>
-        /// Represents rate.
+        /// Initializes an intance of <see cref="ParametersList"/> class.
         /// </summary>
-        public int Rate { get; set; }
+        public ParametersList()
+        {
+            Parameters = new List<AcquisitionData>();
+        }
 
         /// <summary>
         /// Represents Parameters.

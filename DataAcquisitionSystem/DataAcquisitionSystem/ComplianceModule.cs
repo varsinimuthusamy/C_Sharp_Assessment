@@ -13,14 +13,13 @@
         /// <summary>
         /// Represents AcquisitionData.
         /// </summary>
-        private readonly AcquisitionData _acquisitionData;
+        private AcquisitionData _acquisitionData;
 
         /// <summary>
         /// Initializes an instance of <see cref="ComplianceModule"/> class.
         /// </summary>
         public ComplianceModule()
         {
-            _acquisitionData = new AcquisitionData();
             _acquisitionDatas = new List<AcquisitionData>();
         }
 
@@ -32,6 +31,7 @@
         /// <param name="min">Min value.</param>
         public void SetLimits(Parameters parameter, int max, int min)
         {
+            _acquisitionData = new AcquisitionData();
             _acquisitionData.Parameter = parameter;
             _acquisitionData.HighLimit = max;
             _acquisitionData.LowLimit = min;

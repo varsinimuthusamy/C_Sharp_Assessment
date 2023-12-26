@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAcquisitionSystem
+﻿namespace DataAcquisitionSystem
 {
     /// <summary>
     /// Represents utility functions.
@@ -16,7 +10,7 @@ namespace DataAcquisitionSystem
         /// </summary>
         public void StartAcquisition(DataAcquisitionModule dataAcquisitionModule, ComplianceModule complianceModule)
         {
-            if(complianceModule.GetAcquisitionDatas().Count == 2)
+            if(!(complianceModule.GetAcquisitionDatas().Count == 2))
             {
                 MessageColor("Please configure before start acquisition", false);
                 return;
@@ -44,7 +38,7 @@ namespace DataAcquisitionSystem
         {
             foreach(AcquisitionData data in complianceModule.GetAcquisitionDatas())
             {
-                Console.WriteLine($"parameter : {data.Parameter} HighLimit : {data.HighLimit} LowLimit : {data.LowLimit}\n");
+                MessageColor($"parameter : {data.Parameter} HighLimit : {data.HighLimit} LowLimit : {data.LowLimit}\n");
             }
         }
 
@@ -55,7 +49,7 @@ namespace DataAcquisitionSystem
         /// <param name="complianceModule">ComplianceModule.</param>
         public void EndAcquisition(DataAcquisitionModule dataAcquisitionModule, ComplianceModule complianceModule)
         {
-            dataAcquisitionModule.RefreshEvent += complianceModule.CheckValidLimits;
+            dataAcquisitionModule.RefreshEvent -= complianceModule.CheckValidLimits;
             Console.WriteLine("Data Acquisition Ended");
         }
 
