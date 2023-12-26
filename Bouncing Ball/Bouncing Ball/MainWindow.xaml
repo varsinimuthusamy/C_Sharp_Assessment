@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bouncing_Ball"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Name="mainWindow" Title="MainWindow" Height="450" Width="800" >
     <Grid Background="LemonChiffon">
-        <Canvas Name="PaintCanvas">
+        <Canvas Name="PaintCanvas" Width="{Binding ElementName=mainWindow, Path=ActualWidth}"
+                Height="{Binding ElementName=mainWindow, Path=ActualHeight}" Loaded="Window_Loaded">
         </Canvas>
-
-
     </Grid>
 </Window>

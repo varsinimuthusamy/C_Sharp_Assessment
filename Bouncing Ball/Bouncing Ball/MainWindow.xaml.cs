@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -22,8 +13,6 @@ namespace Bouncing_Ball
     public partial class MainWindow : Window
     {
         private bool _left = true;
-        private bool _right = true;
-        private bool _bottom = true;
         private bool _top = true;
         private double newPosX;
         private double newPosY;
@@ -31,66 +20,109 @@ namespace Bouncing_Ball
         public MainWindow()
         {
             InitializeComponent();
-            Canvas.SetLeft(PaintCanvas, 0);
-            Canvas.SetTop(PaintCanvas, 0);
-            Canvas.SetBottom(PaintCanvas,200);
-            Canvas.SetRight(PaintCanvas, 200);
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(100);
+            dispatcherTimer.Interval = new TimeSpan(10000);
             dispatcherTimer.Start();
-            ellipse = new Ellipse() { Width = 100, Height = 100, Fill = Brushes.Red };
+            ellipse = new Ellipse() { Width = 50, Height = 50, Fill = Brushes.Red };
             PaintCanvas.Children.Add(ellipse);
-            Canvas.SetLeft(ellipse, 100);
-            Canvas.SetTop(ellipse, 100);
-            newPosX = Canvas.GetLeft(ellipse);
-            newPosY = Canvas.GetTop(ellipse);
-            
         }
 
+        /// <summary>
+        /// Dispatcher timer method.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">Arguments.</param>
         private void dispatcherTimer_Tick(object? sender, EventArgs e)
         {
             PaintCanvas.Children.Remove(ellipse);
             PaintCanvas.Children.Add(ellipse);
-            var result = Canvas.GetLeft(PaintCanvas);
-            if(Canvas.GetLeft(PaintCanvas) <= Canvas.GetLeft(ellipse))
+            ChangeDirection();
+            MoveBouncingBall();
+        }
+
+        /// <summary>
+        /// Move bouncing ball.
+        /// </summary>
+        private void MoveBouncingBall()
+        {
+            if (_left == true)
             {
-                _left = true;
-            }
-            if (Canvas.GetTop(PaintCanvas) <= Canvas.GetTop(ellipse))
-            {
-                _top = true;
-            }
-            if (Canvas.GetRight(PaintCanvas) >= Canvas.GetRight(ellipse))
-            {
-                _right = true;
-            }
-            if (Canvas.GetBottom(PaintCanvas) >= Canvas.GetBottom(ellipse))
-            {
-                _bottom = true;
-            }
-            if (Canvas.GetLeft(PaintCanvas) >= Canvas.GetLeft(ellipse) || Canvas.GetTop(PaintCanvas) == Canvas.GetTop(ellipse))
-            {
-                Canvas.SetLeft(ellipse, newPosX += 4);
-                Canvas.SetTop(ellipse, newPosY += 4);
+                var result = Canvas.GetRight(PaintCanvas);
+                var result1 = Canvas.GetLeft(ellipse);
+                Canvas.SetLeft(ellipse, newPosX -= 4);
             }
             else
             {
-                Canvas.SetLeft(ellipse, newPosX -= 4);
+                Canvas.SetLeft(ellipse, newPosX += 4);
+            }
+            if (_top == true)
+            {
+                var result = Canvas.GetBottom(PaintCanvas);
+                var result1 = Canvas.GetTop(ellipse);
                 Canvas.SetTop(ellipse, newPosY -= 4);
             }
-        } 
-
-        private void MoveLeftTop()
-        {
-            Canvas.SetLeft(ellipse, newPosX += 4);
-            Canvas.SetTop(ellipse, newPosY += 4);
+            else
+            {
+                Canvas.SetTop(ellipse, newPosY += 4);
+            }
         }
 
-        private void MoveLeftDown()
+        /// <summary>
+        /// Change direction of ball.
+        /// </summary>
+        private void ChangeDirection()
         {
-
+            if (Canvas.GetLeft(PaintCanvas) >= Canvas.GetLeft(ellipse))
+            {
+                _left = false;
+            }
+            var result = Canvas.GetRight(PaintCanvas);
+            var result1 = Canvas.GetLeft(ellipse);
+            var result2 = Canvas.GetRight(ellipse);
+            if (Canvas.GetRight(PaintCanvas) <= Canvas.GetLeft(ellipse))
+            {
+                _left = true;
+            }
+            if (Canvas.GetTop(PaintCanvas) >= Canvas.GetTop(ellipse))
+            {
+                _top = false;
+            }
+            if (Canvas.GetBottom(PaintCanvas) <= Canvas.GetTop(ellipse))
+            {
+                _top = true;
+            }
         }
-        
+
+        /// <summary>
+        /// Event of Window loaded.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">Arguments.</param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Canvas.SetLeft(ellipse, 100);
+            Canvas.SetTop(ellipse, 100);
+            newPosX = Canvas.GetLeft(ellipse);
+            newPosY = Canvas.GetTop(ellipse);
+            Canvas.SetLeft(PaintCanvas, 0);
+            Canvas.SetTop(PaintCanvas, 0);
+            var result = PaintCanvas.ActualWidth;
+            var result1 = PaintCanvas.ActualHeight;
+            Canvas.SetRight(PaintCanvas, PaintCanvas.ActualHeight);
+            Canvas.SetBottom(PaintCanvas, PaintCanvas.ActualWidth);
+        }
+
+        /// <summary>
+        /// Resize canvas.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">Arguments.</param>
+        private void Resize_Canvas(object sender, SizeChangedEventArgs e)
+        {
+            var result = PaintCanvas.ActualWidth;
+            Canvas.SetRight(PaintCanvas, PaintCanvas.ActualHeight);
+            Canvas.SetBottom(PaintCanvas, PaintCanvas.ActualWidth);
+        }
     }
 }
