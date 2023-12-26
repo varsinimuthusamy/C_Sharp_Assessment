@@ -48,8 +48,9 @@ namespace DataAcquisitionSystem
         /// Checks valid limits.
         /// </summary>
         /// <param name="acquisitionDatasfromJSON">acquisitionDatasfromJSON</param>
-        public void CheckValidLimits(List<AcquisitionData> acquisitionDatasfromJSON)
+        public void CheckValidLimits(object sender , DataAcquisitionEventArgs e )
         {
+            List<AcquisitionData> acquisitionDatasfromJSON = e.AcquisitionDatas;
             LoggingSystem loggingSystem = new LoggingSystem();
             foreach (var acquisitionData in acquisitionDatasfromJSON)
             {

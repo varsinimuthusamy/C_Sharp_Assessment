@@ -14,15 +14,35 @@ namespace DataAcquisitionSystem
         /// <summary>
         /// Represents Start of Acquisition.
         /// </summary>
-        public void StartAcquisition()
+        public void StartAcquisition(DataAcquisitionModule dataAcquisitionModule, ComplianceModule complianceModule)
         {
-          
+            dataAcquisitionModule.RefreshEvent += complianceModule.CheckValidLimits;
+            dataAcquisitionModule.OnRefresh();
+        }
+
+        /// <summary>
+        /// Represents end of acquisition system.
+        /// </summary>
+        /// <param name="dataAcquisitionModule">DataAcquisitionModule.</param>
+        /// <param name="complianceModule">ComplianceModule.</param>
+        public void EndAcquisition(DataAcquisitionModule dataAcquisitionModule, ComplianceModule complianceModule)
+        {
+            dataAcquisitionModule.RefreshEvent += complianceModule.CheckValidLimits;
+        }
+
+        /// <summary>
+        /// Refresh the Acquisition model.
+        /// </summary>
+        /// <param name="dataAcquisitionModule">Data Acquisition Module.</param>
+        public void Refresh(DataAcquisitionModule dataAcquisitionModule)
+        {
+            dataAcquisitionModule.OnRefresh();
         }
 
         /// <summary>
         /// Configure compliance module.
         /// </summary>
-        public void ConfigureComplianceModule()
+        public void ConfigureComplianceModule(ComplianceModule complianceModule)
         {
             Console.WriteLine("Please add Compliance limits for following parameters :" +
                               "\n1.Current\n2.Temperature");
@@ -47,6 +67,11 @@ namespace DataAcquisitionSystem
             {
                 parameter = Parameters.Temperature;
             }
+            Console.WriteLine($"Please enter high limit of {parameter}");
+            int MaxValue = IsvalidInput();
+            Console.WriteLine($"Please enter Low limit of {parameter}");
+            int MinValue = IsvalidInput(); 
+            complianceModule.SetLimits(parameter, MaxValue, MinValue);
         }
 
         /// <summary>

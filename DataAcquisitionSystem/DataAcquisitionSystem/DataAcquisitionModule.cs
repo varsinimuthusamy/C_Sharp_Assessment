@@ -13,17 +13,39 @@ namespace DataAcquisitionSystem
     /// </summary>
     internal class DataAcquisitionModule
     {
-        private event EventHandler Refresh;
+        public List<AcquisitionData> acquisitionDatas;
+
+        public delegate void DataAcquisitionEventHandler(object sender, DataAcquisitionEventArgs e);
+
+        // Declare the event.
+        public event DataAcquisitionEventHandler RefreshEvent;
+
+        /// <summary>
+        /// Initializes an intance of <see cref="DataAcquisitionModule"/> class.
+        /// </summary>
+        public DataAcquisitionModule() 
+        {
+           acquisitionDatas = new List<AcquisitionData>();
+        }
+        
         /// <summary>
         /// Deserialize data.
         /// </summary>
         public void LoadJSON()
         {
-            using (StreamReader reader = new StreamReader("AcquisitionData.txt"))
+            try
             {
-                var data = reader.ReadToEnd();
-                var result = JsonSerializer.Deserialize<List<AcquisitionData>>(data);
+                using (StreamReader reader = new StreamReader("AcquisitionData.txt"))
+                {
+                    var data = reader.ReadToEnd();
+                    acquisitionDatas = JsonSerializer.Deserialize<List<AcquisitionData>>(data);
+                }
             }
+            catch
+            {
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -39,9 +61,12 @@ namespace DataAcquisitionSystem
             }
         }
 
-        public void OnRefresh(EventArgs e)
+        /// <summary>
+        /// Fire the refresh event.
+        /// </summary>
+        public void OnRefresh()
         {
-            Refresh.Invoke(this, e);
+            RefreshEvent.Invoke(this, new DataAcquisitionEventArgs() { AcquisitionDatas = acquisitionDatas});
         }
     }
 }

@@ -12,6 +12,15 @@ namespace DataAcquisitionSystem
     internal class AcquisitionData : EventArgs
     {
         /// <summary>
+        /// Initialises an instance of <see cref="AcquisitionData"/> class.
+        /// </summary>
+        public AcquisitionData() 
+        { 
+            HighLimit = 0;
+            LowLimit = 0;
+        }
+
+        /// <summary>
         /// Represents Parameter.
         /// </summary>
         public Parameters Parameter { get; set; }

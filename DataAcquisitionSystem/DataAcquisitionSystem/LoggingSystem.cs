@@ -20,7 +20,7 @@ namespace DataAcquisitionSystem
         {
             using (StreamWriter writer = new StreamWriter("LogFile.txt", true))
             {
-                writer.WriteLine();
+                writer.WriteLine(message);
             }
         }
     }
