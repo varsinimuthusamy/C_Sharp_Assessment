@@ -1,0 +1,41 @@
+@startuml Data Acquistion System
+class program{
+
+}
+class Utility
+{
+ +void StartAcquistion
+ +void EndAcquistion
+ +void ConfigureComplianceModule
+ +void RefreshConfiguration
+ +Exit
+}
+class AcquisitionData
+{
+Parameters Parameter
+int HighLimit
+int LowLimit
+}
+Enum Parameters
+{
+Current,
+Temperature,
+}
+class ComplianceModule
+{
++ void SetComplianceLimt
++ void ValidateLimits
+}
+class DataAcquisitionModule
+{
++ void LoadJSON
++void UpdateJSON
+}
+AcquisitionData o-- Parameters
+program o-- ComplianceModule
+program o-- DataAcquisitionModule
+program o-- Utility
+ComplianceModule o-- AcquisitionData
+DataAcquisitionModule o-- AcquisitionData
+
+@enduml
