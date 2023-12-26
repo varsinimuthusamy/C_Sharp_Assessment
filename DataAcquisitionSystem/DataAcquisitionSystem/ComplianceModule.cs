@@ -1,0 +1,84 @@
+﻿namespace DataAcquisitionSystem
+{
+    /// <summary>
+    /// Represents compliance module.
+    /// </summary>
+    public class ComplianceModule
+    {
+        /// <summary>
+        /// Represents list of AcquisitionData.
+        /// </summary>
+        private readonly List<AcquisitionData> _acquisitionDatas;
+
+        /// <summary>
+        /// Represents AcquisitionData.
+        /// </summary>
+        private AcquisitionData _acquisitionData;
+
+        /// <summary>
+        /// Initializes an instance of <see cref="ComplianceModule"/> class.
+        /// </summary>
+        public ComplianceModule()
+        {
+            _acquisitionDatas = new List<AcquisitionData>();
+        }
+
+        /// <summary>
+        /// Represents parameters.
+        /// </summary>
+        public Parameters Parameter { get; set; }
+
+        /// <summary>
+        /// Represents parameter value.
+        /// </summary>
+        public int ParameterValue { get; set; }
+
+        /// <summary>
+        /// Sets limits for parameter.
+        /// </summary>
+        /// <param name="parameter">Paramter.</param>
+        /// <param name="max">Max value.</param>
+        /// <param name="min">Min value.</param>
+        public void SetLimits(Parameters parameter, int max, int min)
+        {
+            _acquisitionData = new AcquisitionData();
+            _acquisitionData.Parameter = parameter;
+            _acquisitionData.HighLimit = max;
+            _acquisitionData.LowLimit = min;
+            _acquisitionDatas.Add(_acquisitionData);
+        }
+
+        /// <summary>
+        /// Checks valid limits.
+        /// </summary>
+        /// <param name="acquisitionDatasfromJSON">acquisitionDatasfromJSON</param>
+        public void CheckValidLimits(object sender, DataAcquisitionEventArgs e)
+        {
+            List<AcquisitionData> acquisitionDatasfromJSON = e.AcquisitionDatas;
+            LoggingSystem loggingSystem = new LoggingSystem();
+            foreach (var acquisitionData in acquisitionDatasfromJSON)
+            {
+                if (Parameter == acquisitionData.Parameter)
+                {
+                    if (ParameterValue <= acquisitionData.HighLimit && ParameterValue >= acquisitionData.LowLimit)
+                    {
+                        loggingSystem.SaveToFile($"parameter : {acquisitionData.Parameter} HighLimit : {acquisitionData.HighLimit} LowLimit : {acquisitionData.LowLimit}");
+                    }
+                    else
+                    {
+                        loggingSystem.SaveToFile($"parameter : {acquisitionData.Parameter} exceeds limts");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns deep copy of list.
+        /// </summary>
+        /// <returns> Returns deep copy of list.</returns>
+        public List<AcquisitionData> GetAcquisitionDatas()
+        {
+            return _acquisitionDatas.ConvertAll<AcquisitionData>(data => new AcquisitionData(data));
+        }
+    }
+}
