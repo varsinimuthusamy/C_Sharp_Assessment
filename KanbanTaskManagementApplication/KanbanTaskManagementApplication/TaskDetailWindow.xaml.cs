@@ -19,9 +19,19 @@ namespace KanbanTaskManagementApplication
     /// </summary>
     public partial class TaskDetailWindow : Window
     {
-        public TaskDetailWindow()
+        public Task task { get; set; }
+        public TaskDetailWindow(Task Tasks)
         {
+            task = Tasks;
             InitializeComponent();
+        }
+
+        private void Submit_Click(object sender, RoutedEventArgs e)
+        {
+            task.Name = textBoxName.Text;
+            task.Description = textBoxDescription.Text;
+            task.DueDate = DateTime.Parse(textBoxDueDate.Text);
+            Close();
         }
     }
 }

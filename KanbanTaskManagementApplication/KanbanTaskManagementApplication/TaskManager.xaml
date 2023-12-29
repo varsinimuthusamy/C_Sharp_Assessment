@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KanbanTaskManagementApplication"
         mc:Ignorable="d"
-        Title="TaskManager" Height="450" Width="800">
+        Title="TaskManager" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*">
@@ -14,9 +15,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Name="Project" Content="New Project" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20" Width="Auto" Click="Add_Project" />
+        <Button Name="Project" Content="New Project" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20" Width="Auto" />
         <Button Name ="Task" Content="New Task" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" Width="68" Click="Add_Task" />
-        <ListView x:Name="toDoTask" Margin="10,10,10,10" Grid.Column="1" Background="AliceBlue" >
+        <Button Name ="SelectedTask" Content="Delete Task" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" Width="68" Click="Delete_Task" />
+        <ListView x:Name="toDoTask" Margin="10,10,10,10" Grid.Column="1" Background="AliceBlue" ItemsSource="{Binding project.Todo}" SelectedItem="{Binding project.Todo}">
+            <ListView.View>
+                <GridView x:Name="grdNames">
+                    <GridViewColumn Header="TODO"  DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
         </ListView>
         <ListView x:Name="progressTask" Margin="10,10,10,10" Grid.Column="2" Background="LightGoldenrodYellow">
         </ListView>

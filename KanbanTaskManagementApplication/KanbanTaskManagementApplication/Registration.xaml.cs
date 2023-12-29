@@ -9,7 +9,7 @@ namespace KanbanTaskManagementApplication
     /// </summary>
     public partial class Registration : Window
     {
-        public List<User> Users = new List<User>();
+        public static List<User> Users = new List<User>();
         public Registration()
         {
             InitializeComponent();

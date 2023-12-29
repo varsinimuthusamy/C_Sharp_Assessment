@@ -43,11 +43,12 @@ namespace KanbanTaskManagementApplication
             {
                 string email = textBoxEmail.Text;
                 string password = passwordBox1.Password;
-                foreach(var user in registration.Users)
+                foreach(var user in Registration.Users)
                 {
                     if(user.Email == email && user.Password == password)
                     {
-                        // open application
+                        TaskManager taskManager = new TaskManager();
+                        taskManager.Show();
                         Close();
                     }
                     else
