@@ -10,13 +10,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="252*" />
         </Grid.RowDefinitions>
-        <TextBlock Height="23" HorizontalAlignment="Left" Name="TaskDetails" Text="Task details" VerticalAlignment="Top" Width="110" Margin="143,10,0,0" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Name="TaskDetails" Text="Task details" VerticalAlignment="Top" Width="110" Margin="143,10,0,0"/>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,60,0,0" Name="taskName" Text="Name:" VerticalAlignment="Top" Width="110" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,100,0,0" Name="taskDescription" Text="Description:" VerticalAlignment="Top" Width="110" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,140,0,0" Name="taskDueDate" Text="Due Date" VerticalAlignment="Top" Width="110"  />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="183,60,0,0" Name="textBoxName" VerticalAlignment="Top" Width="222" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="183,100,0,0" Name="textBoxDescription" VerticalAlignment="Top" Width="222" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="183,140,0,0" Name="textBoxDueDate" VerticalAlignment="Top" Width="222" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="183,60,0,0" Name="textBoxName" VerticalAlignment="Top" Width="222" Text="{Binding task.Name}"/>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="183,100,0,0" Name="textBoxDescription" VerticalAlignment="Top" Width="222" Text="{Binding task.Description}"/>
+        <DatePicker Height="23" HorizontalAlignment="Left" Margin="183,140,0,0" Name="datePicker" VerticalAlignment="Top" Width="222" />
         <Button Content="Submit" Height="23" HorizontalAlignment="Left" Margin="183,180,0,0" Name="Submit" VerticalAlignment="Top" Width="70" Click="Submit_Click" />
     </Grid>
 </Window>

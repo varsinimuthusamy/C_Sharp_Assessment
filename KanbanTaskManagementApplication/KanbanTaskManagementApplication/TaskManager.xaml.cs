@@ -17,20 +17,26 @@ namespace KanbanTaskManagementApplication
         public TaskManager()
         {
             project = new Project();
-            Tasks = new Task();
             InitializeComponent();
         }
         private void Add_Task(object sender, RoutedEventArgs e)
         {
+            Tasks = new Task();
             TaskDetailWindow taskDetailWindow = new TaskDetailWindow(Tasks);
             taskDetailWindow.ShowDialog();
             project.Todo.Add(Tasks);
         }
-
         private void Delete_Task(object sender, RoutedEventArgs e)
         {
-            var result = toDoTask.SelectedItem; 
-            project.Todo.Remove();
+            var result = (Task)toDoTask.SelectedItem; 
+            project.Todo.Remove(result);
         }
+        private void Edit_Task(object sender, RoutedEventArgs e)
+        {
+            var result = (Task)toDoTask.SelectedItem;
+            TaskDetailWindow taskDetailWindow = new TaskDetailWindow(result);
+            taskDetailWindow.ShowDialog();
+        }
+
     }
 }

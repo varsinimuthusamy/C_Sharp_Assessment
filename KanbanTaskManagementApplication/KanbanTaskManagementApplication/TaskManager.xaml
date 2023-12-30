@@ -18,7 +18,8 @@
         <Button Name="Project" Content="New Project" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20" Width="Auto" />
         <Button Name ="Task" Content="New Task" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" Width="68" Click="Add_Task" />
         <Button Name ="SelectedTask" Content="Delete Task" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" Width="68" Click="Delete_Task" />
-        <ListView x:Name="toDoTask" Margin="10,10,10,10" Grid.Column="1" Background="AliceBlue" ItemsSource="{Binding project.Todo}" SelectedItem="{Binding project.Todo}">
+        <Button Name ="SelectedTask1" Content="Edit Task" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0" Width="68" Click="Edit_Task" />
+        <ListView x:Name="toDoTask" Margin="10,10,10,10" Grid.Column="1" Background="AliceBlue" ItemsSource="{Binding project.Todo}">
             <ListView.View>
                 <GridView x:Name="grdNames">
                     <GridViewColumn Header="TODO"  DisplayMemberBinding="{Binding Name}"/>

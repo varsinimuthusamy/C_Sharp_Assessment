@@ -23,6 +23,7 @@ namespace KanbanTaskManagementApplication
         public TaskDetailWindow(Task Tasks)
         {
             task = Tasks;
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -30,8 +31,13 @@ namespace KanbanTaskManagementApplication
         {
             task.Name = textBoxName.Text;
             task.Description = textBoxDescription.Text;
-            task.DueDate = DateTime.Parse(textBoxDueDate.Text);
+            task.DueDate = (DateTime)datePicker.SelectedDate;
             Close();
+        }
+
+        private void textBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
